@@ -1,5 +1,7 @@
 package br.com.roque.codechella;
 
+import br.com.roque.codechella.domain.ingresso.Definicao;
+import br.com.roque.codechella.domain.ingresso.Setor;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
