@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 public class Evento {
 
@@ -37,12 +38,45 @@ public class Evento {
         this.uuid = UUID.randomUUID();
     }
 
-    public Evento() {}
+    private Evento() {}
 
     public void incluiNovoTipoDeIngressoAoEvento(TipoIngresso tipoIngresso){
         this.tipoIngressos.add(tipoIngresso);
     }
 
+    public static class Builder{
+        private Evento evento;
+
+        public Builder() {
+            this.evento = new Evento();
+        }
+
+        public Builder comCategoria(Categoria categoria){
+            evento.categoria = categoria;
+            return this;
+        }
+
+        public Builder comDescricao(String descricao){
+            evento.descricao = descricao;
+            return this;
+        }
+
+        public Builder comEndereco(String cep, Integer numero, String complemento) {
+            Endereco endereco = new Endereco(cep, numero, complemento);
+            evento.endereco = endereco;
+            return this;
+        }
+
+        public Builder comData(LocalDateTime data){
+            evento.data = data;
+            return this;
+        }
+        public Evento build(){
+            evento.gerarIdentificadorUnico();
+            return evento;
+        }
+
+    }
     public void aumentaNumeroDeIngressoPorTipo(String tipo, int quantidade) {
 //        for (TipoIngresso ingresso : ingressos) {
 //            if (TipoIngresso.getIngresso(). equals(tipo)) {
@@ -70,5 +104,15 @@ public class Evento {
 
     public List<TipoIngresso> getTipoIngressos() {
         return tipoIngressos;
+    }
+
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "categoria=" + categoria +
+                ", descricao='" + descricao + '\'' +
+                ", endereco=" + endereco +
+                ", data=" + data +
+                '}';
     }
 }
